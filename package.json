@@ -1,23 +1,39 @@
 {
-  "name": "10foodhotel",
-  "version": "1.0.0",
-  "main": "main.ts",
-  "scripts": {
-    "dev": "nodemon",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "@fastify/mysql": "^5.0.1",
-    "fastify": "^5.0.0",
-    "prisma": "^5.21.1",
-    "typescript": "^5.6.3"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.7",
-    "ts-node": "^10.9.2"
-  }
+    "name": "10foodhotel",
+    "version": "1.0.0",
+    "main": "main.ts",
+    "scripts": {
+        "dev": "nodemon --quiet",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prettier": "prettier --write ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "@fastify/cors": "^10.0.1",
+        "@fastify/jwt": "^9.0.1",
+        "@fastify/multipart": "^9.0.1",
+        "@fastify/static": "^8.0.2",
+        "@prisma/client": "^5.21.1",
+        "bcrypt": "^5.1.1",
+        "fastify": "^5.1.0",
+        "jsonwebtoken": "^9.0.2",
+        "multer": "^1.4.5-lts.1",
+        "prisma": "^5.21.1",
+        "uuid": "^11.0.3",
+        "zod": "^3.23.8"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^5.0.2",
+        "@types/jsonwebtoken": "^9.0.7",
+        "@types/multer": "^1.4.12",
+        "@types/node": "^22.8.2",
+        "nodemon": "^3.1.7",
+        "prettier": "^3.3.3",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.6.3"
+    }
 }

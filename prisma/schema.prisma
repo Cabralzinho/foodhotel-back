@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:AdminProject2018!@127.0.0.1:3306/foodhotel"
+}
+
+model Room {
+  id     Int    @id @default(autoincrement())
+  number Int
+  guest  Guest? @relation("RoomGuest")
+}
+
+model Orders {
+  id             Int              @id @default(autoincrement())
+  guestId        Int
+  OrdersProducts OrdersProducts[]
+}
+
+model OrdersProducts {
+  id        Int    @id @default(autoincrement())
+  productId Int
+  order     Orders @relation(fields: [orderId], references: [id])
+  orderId   Int
+}
+
+model Guest {
+  id     Int     @id @default(autoincrement())
+  roomId Int     @unique
+  room   Room    @relation("RoomGuest", fields: [roomId], references: [id])
+  name   String
+  escort String?
+}
+
+model Products {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  amount      Int
+  image       Image?
+  imageId     Int?   @unique
+}
+
+model Category {
+  id   Int    @id @default(autoincrement())
+  name String
+}
+
+model Image {
+  id        Int       @id @default(autoincrement())
+  filename  String
+  src       String
+  productId Int       @unique
+  product   Products? @relation(fields: [productId], references: [id])
+  createdAt DateTime  @default(now())
+}
+
+model Account {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     String
+}

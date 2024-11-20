@@ -1,11 +1,20 @@
 {
-  "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "baseUrl": "src",
-    "outDir": "dist",
-    "sourceMap": true,
-    "noImplicitAny": true
-  },
-  "include": ["src/**/*.ts"]
+    "ts-node": {
+        "require": ["tsconfig-paths/register"]
+    },
+    "compilerOptions": {
+        "typeRoots": ["./node_modules/@types", "./src/types"],
+        "target": "ESNext",
+        "module": "commonjs",
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "noEmitOnError": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    }
 }
