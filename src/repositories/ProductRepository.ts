@@ -1,13 +1,11 @@
 import { prisma } from "../config/prisma";
-import { Iproduct } from "../types/Product";
 
 type CreateArgs = {
     name: string;
     price: number;
     description: string;
     amount: number;
-    src: string;
-    fileName: string;
+    imagePath: string;
 };
 
 export class ProductRepository {
@@ -16,21 +14,15 @@ export class ProductRepository {
         price,
         description,
         amount,
-        src,
-        fileName
+        imagePath
     }: CreateArgs) {
         return await prisma.products.create({
             data: {
                 name: name,
-                price: price,
-                amount: amount,
+                price: Number(price),
+                amount: Number(amount),
                 description: description,
-                image: {
-                    create: {
-                        src: src,
-                        filename: fileName
-                    }
-                }
+                imagePath: imagePath
             }
         });
     }
@@ -49,7 +41,12 @@ export class ProductRepository {
 
     public async updateProduct(
         id: number,
-        { name, price, description, amount }: Iproduct
+        {
+            name,
+            price,
+            description,
+            amount
+        }: { name: string; price: number; description: string; amount: number }
     ) {
         return await prisma.products.update({
             where: {
@@ -60,14 +57,6 @@ export class ProductRepository {
                 price: price,
                 description: description,
                 amount: amount
-            }
-        });
-    }
-
-    public async getImage(id: number) {
-        return await prisma.image.findUnique({
-            where: {
-                productId: Number(id)
             }
         });
     }

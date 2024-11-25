@@ -5,7 +5,8 @@
     "compilerOptions": {
         "typeRoots": ["./node_modules/@types", "./src/types"],
         "target": "ESNext",
-        "module": "commonjs",
+        "module": "ESNext",
+        "moduleResolution": "node",
         "outDir": "./dist",
         "rootDir": "./src",
         "noEmitOnError": true,

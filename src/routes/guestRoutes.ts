@@ -8,4 +8,5 @@ export const guestRoutes = (app: FastifyInstance) => {
     app.get("/guests", GuestController.getGuests);
     app.post("/guests", GuestController.createGuest);
     app.delete("/guests/:id", GuestController.deleteGuest);
+    app.get("/guests/:id", GuestController.getGuest);
 };

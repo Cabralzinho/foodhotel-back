@@ -1,6 +1,6 @@
 import { z } from "zod";
 import bcrypt from "bcrypt";
-import { AccountRepository } from "@/repositories/AccountRepository";
+import { AccountRepository } from "../repositories/AccountRepository";
 import jwt from "jsonwebtoken";
 
 export class AccountService {
@@ -32,10 +32,12 @@ export class AccountService {
 
         const token = jwt.sign(
             {
-                exp: Math.floor(Date.now() / 1000) + 60 * 60,
                 data: account.id
             },
-            process.env.JWT_SECRET as string
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "1d"
+            }
         );
 
         return { token };

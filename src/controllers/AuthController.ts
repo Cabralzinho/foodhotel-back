@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { AccountService } from "@/services/AccountService";
+import { AccountService } from "../services/AccountService";
 
 export class AuthController {
     private static readonly accountService = new AccountService();

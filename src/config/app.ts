@@ -5,34 +5,38 @@ import { guestRoutes } from "@/routes/guestRoutes";
 import { productRoutes } from "@/routes/productRoutes";
 import { UnauthorizedError } from "@/errors/UnauthorizedError";
 import { dashboardRoutes } from "@/routes/dashboardRoutes";
+import multipart from "@fastify/multipart";
+import cors from "@fastify/cors";
+import fastifyStatic from "@fastify/static";
+import path from "path";
+import { fileURLToPath } from "url";
+import { orderRoutes } from "@/routes/orderRoutes";
+import { routes } from "@/routes/routes";
 
 const app = fastify();
 
-app.register(require("@fastify/cors"), {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.register(cors, {
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Authorization", "Content-Type"]
 });
 
-app.register(require("@fastify/jwt"), {
-    secret: process.env.JWT_SECRET
-});
-
-app.register(require("@fastify/multipart"), {
+app.register(multipart, {
+    attachFieldsToBody: "keyValues",
     limits: {
-        fileSize: 6 * 1024 * 1024
+        fileSize: 5 * 1024 * 1024
     }
 });
 
-app.register(require("@fastify/static"), {
-    root: require("path").join(__dirname, "uploads"),
+app.register(fastifyStatic, {
+    root: path.join(__dirname, "../../uploads"),
     prefix: "/uploads/"
 });
 
-app.register(authRoutes);
-app.register(guestRoutes);
-app.register(productRoutes);
-app.register(dashboardRoutes);
+app.register(routes);
 
 app.setErrorHandler(async (error, request, reply) => {
     if (error instanceof NotFoundError) {
@@ -46,6 +50,8 @@ app.setErrorHandler(async (error, request, reply) => {
             message: error.message
         });
     }
+
+    console.log(error);
 
     return reply.status(500).send({
         message: error.message

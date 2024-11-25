@@ -1,4 +1,4 @@
-import { UnauthorizedError } from "@/errors/UnauthorizedError";
+import { UnauthorizedError } from "../../errors/UnauthorizedError";
 import { FastifyReply, FastifyRequest } from "fastify";
 import jwt from "jsonwebtoken";
 

@@ -8,54 +8,50 @@ datasource db {
 }
 
 model Room {
-  id     Int    @id @default(autoincrement())
-  number Int
-  guest  Guest? @relation("RoomGuest")
+  id      Int    @id @unique @default(autoincrement())
+  guestId Int?
+  guest   Guest? @relation("CurrentGuest", fields: [guestId], references: [id])
+
+  guests Guest[]
 }
 
-model Orders {
-  id             Int              @id @default(autoincrement())
-  guestId        Int
-  OrdersProducts OrdersProducts[]
-}
+model Consumptions {
+  productId   Int
+  guestId     Int
+  guest       Guest  @relation(fields: [guestId], references: [id])
+  name        String
+  description String @db.Text
+  price       Float
+  imagePath   String
+  amount      Int
 
-model OrdersProducts {
-  id        Int    @id @default(autoincrement())
-  productId Int
-  order     Orders @relation(fields: [orderId], references: [id])
-  orderId   Int
+  @@id([guestId, productId])
 }
 
 model Guest {
-  id     Int     @id @default(autoincrement())
-  roomId Int     @unique
-  room   Room    @relation("RoomGuest", fields: [roomId], references: [id])
-  name   String
-  escort String?
+  id           Int            @id @default(autoincrement())
+  name         String
+  roomId       Int
+  room         Room           @relation(fields: [roomId], references: [id])
+  companions   String
+  consumptions Consumptions[]
+  hasCheckout  Boolean        @default(false)
+
+  Room Room[] @relation("CurrentGuest")
 }
 
 model Products {
   id          Int    @id @default(autoincrement())
   name        String
-  description String
+  description String @db.Text
   price       Float
   amount      Int
-  image       Image?
-  imageId     Int?   @unique
+  imagePath   String
 }
 
 model Category {
   id   Int    @id @default(autoincrement())
   name String
-}
-
-model Image {
-  id        Int       @id @default(autoincrement())
-  filename  String
-  src       String
-  productId Int       @unique
-  product   Products? @relation(fields: [productId], references: [id])
-  createdAt DateTime  @default(now())
 }
 
 model Account {
